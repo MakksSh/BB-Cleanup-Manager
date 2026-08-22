@@ -1,0 +1,12 @@
+{
+    "display_name": "BB Cleanup Manager",
+    "loading_order": 50,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "style.css",
+    "author": "BruniikBron",
+    "version": "0.1.0",
+    "homePage": "https://github.com/maxkara14/BB-Cleanup-Manager",
+    "auto_update": false
+}
