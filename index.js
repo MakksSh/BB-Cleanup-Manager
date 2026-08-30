@@ -181,30 +181,42 @@ async function fetchWorldData(name) {
 }
 
 function collectKnownStrings(value, knownNames, callback) {
-    if (typeof value === 'string') {
-        if (knownNames.has(value)) callback(value);
-        return;
-    }
+    const pending = [value];
+    const visited = new WeakSet();
 
-    if (Array.isArray(value)) {
-        value.forEach(item => collectKnownStrings(item, knownNames, callback));
-        return;
-    }
+    while (pending.length > 0) {
+        const current = pending.pop();
+        if (typeof current === 'string') {
+            if (knownNames.has(current)) callback(current);
+            continue;
+        }
+        if (!current || typeof current !== 'object' || visited.has(current)) continue;
 
-    if (value && typeof value === 'object') {
-        Object.values(value).forEach(item => collectKnownStrings(item, knownNames, callback));
+        visited.add(current);
+        for (const nestedValue of Object.values(current)) {
+            pending.push(nestedValue);
+        }
     }
 }
 
 function collectLorebookFields(value, knownNames, callback) {
     if (!value || typeof value !== 'object') return;
 
-    for (const [key, nestedValue] of Object.entries(value)) {
-        if (/lorebook/i.test(key)) {
-            collectKnownStrings(nestedValue, knownNames, callback);
-        }
-        if (nestedValue && typeof nestedValue === 'object') {
-            collectLorebookFields(nestedValue, knownNames, callback);
+    const pending = [value];
+    const visited = new WeakSet();
+
+    while (pending.length > 0) {
+        const current = pending.pop();
+        if (visited.has(current)) continue;
+        visited.add(current);
+
+        for (const [key, nestedValue] of Object.entries(current)) {
+            if (/lorebook/i.test(key)) {
+                collectKnownStrings(nestedValue, knownNames, callback);
+            }
+            if (nestedValue && typeof nestedValue === 'object') {
+                pending.push(nestedValue);
+            }
         }
     }
 }
