@@ -123,7 +123,9 @@
     min-height: 520px;
     gap: 12px;
     text-align: left;
+    min-height: 0;
     overflow: hidden;
+    touch-action: pan-y;
 }
 
 .bbcm-manager-header,
@@ -285,9 +287,20 @@
 .bbcm-manager-content {
     flex: 1 1 auto;
     min-height: 0;
+    min-width: 0;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
+    touch-action: pan-y;
     padding: 2px 4px 8px 2px;
+}
+
+.popup.vertical_scrolling_dialogue_popup .bbcm-manager {
+    min-height: 0;
+}
+
+.bbcm-manager .bbcm-tab-panel {
+    min-height: 0;
 }
 
 .bbcm-tab-panel[hidden] {
