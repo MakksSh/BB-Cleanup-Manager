@@ -1028,7 +1028,7 @@ async function openManager() {
     const popup = new Popup(managerMarkup(), POPUP_TYPE.TEXT, '', {
         large: true,
         wide: true,
-        allowVerticalScrolling: true,
+        allowVerticalScrolling: false,
         okButton: false,
         cancelButton: 'Закрыть',
         onClosing: () => {

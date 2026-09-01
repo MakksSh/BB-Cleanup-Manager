@@ -120,12 +120,16 @@
     flex-direction: column;
     width: 100%;
     height: min(78vh, 860px);
-    min-height: 520px;
+    max-height: calc(100dvh - 4em);
     gap: 12px;
     text-align: left;
     min-height: 0;
     overflow: hidden;
-    touch-action: pan-y;
+}
+
+.popup:has(.bbcm-manager) .popup-content {
+    min-height: 0;
+    overflow: hidden;
 }
 
 .bbcm-manager-header,
@@ -292,11 +296,8 @@
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     touch-action: pan-y;
+    scrollbar-gutter: stable;
     padding: 2px 4px 8px 2px;
-}
-
-.popup.vertical_scrolling_dialogue_popup .bbcm-manager {
-    min-height: 0;
 }
 
 .bbcm-manager .bbcm-tab-panel {
